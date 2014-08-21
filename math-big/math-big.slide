@@ -1,0 +1,120 @@
+math/big
+because int64 overflows
+17:00 21 Aug 2014
+Tags: math
+
+
+Attila Oláh
+maker of things, stor.es
+attila@attilaolah.eu
+http://attilaolah.eu
+@attilaolah
+
+
+* Assignemnt: Fibonacci server
+
+- GET /fib/37 ➡ 24157817
+
+
+* Assignemnt: Fibonacci server
+
+- GET /fib/37 ➡ 24157817 (~60 ns/op)
+
+.play fib_1/fib_1.go /START/,/END/
+
+
+* Issue #1: big numbers
+
+- GET /fib/37 ➡ 24157817 (~60 ns/op)
+- GET /fib/93 ➡ *12200160415121876738*
+
+
+* Issue #1: big numbers
+
+- GET /fib/37 ➡ 24157817 (*~3200* *ns/op*, 50× slower)
+- GET /fib/93 ➡ 12200160415121876738 (*~6500* *ns/op*)
+
+.play fib_2/fib_2.go /START/,/END/
+
+
+* Issue #2: batch results
+
+- GET /fib/37 ➡ 24157817 (~3200 ns/op)
+- GET /fib/93 ➡ 12200160415121876738 (~6500 ns/op)
+- GET /fib/12..18 ➡ *[144,233,377,610,987,1597]*
+
+
+* Issue #2: batch results
+
+- GET /fib/37 ➡ 24157817 (~3200 ns/op)
+- GET /fib/93 ➡ 12200160415121876738 (~6500 ns/op)
+- GET /fib/12..18 ➡ [144,233,377,610,987,1597] (*~12500* *ns/op*)
+
+.play fib_3/fib_3.go /START1/,/END1/
+
+
+* Issue #2: batch results
+
+- GET /fib/37 ➡ 24157817 (~3200 ns/op)
+- GET /fib/93 ➡ 12200160415121876738 (~6500 ns/op)
+- GET /fib/12..18 ➡ [144,233,377,610,987,1597] *(~12500* *ns/op)*
+
+.play fib_3/fib_3.go /START2/,/END2/
+
+
+* Issue #3: faster batch results
+
+- GET /fib/37 ➡ 24157817 (~3200 ns/op)
+- GET /fib/93 ➡ 12200160415121876738 (~6500 ns/op)
+- GET /fib/12..18 ➡ [144,233,377,610,987,1597] *(~12500* *ns/op)*
+
+
+* Issue #3: faster batch results
+
+- GET /fib/37 ➡ 24157817 (~3200 ns/op)
+- GET /fib/93 ➡ 12200160415121876738 (~6500 ns/op)
+- GET /fib/12..18 ➡ *…*
+
+.play fib_4/fib_4.go /START/,/END/ HLWTF
+
+
+* Issue #3: faster batch results
+
+- GET /fib/37 ➡ 24157817 (~3200 ns/op)
+- GET /fib/93 ➡ 12200160415121876738 (~6500 ns/op)
+- GET /fib/12..18 ➡ *[2584,4181,2584,4181,2584,4181]* — *⸘WTF‽*
+
+.play fib_4/fib_4.go /START/,/END/ HLWTF
+
+* Issue #3: faster batch results
+
+- GET /fib/37 ➡ 24157817 (~3200 ns/op)
+- GET /fib/93 ➡ 12200160415121876738 (~6500 ns/op)
+- GET /fib/12..18 ➡ *…*
+
+.play fib_5/fib_5.go /START/,/END/ HLWTF
+
+
+* Issue #3: faster batch results
+
+- GET /fib/37 ➡ 24157817 (~3200 ns/op)
+- GET /fib/93 ➡ 12200160415121876738 (~6500 ns/op)
+- GET /fib/12..18 ➡ *[2584,4181,2584,4181,2584,4181]* — *⸘WTF‽*
+
+.play fib_5/fib_5.go /START/,/END/ HLWTF
+
+* Issue #3: faster batch results
+
+- GET /fib/37 ➡ 24157817 (~3200 ns/op)
+- GET /fib/93 ➡ 12200160415121876738 (~6500 ns/op)
+- GET /fib/12..18 ➡ *…*
+
+.play fib_6/fib_6.go /START/,/END/
+
+* Issue #3: faster batch results
+
+- GET /fib/37 ➡ 24157817 (~3200 ns/op)
+- GET /fib/93 ➡ 12200160415121876738 (~6500 ns/op)
+- GET /fib/12..18 ➡ [144,233,377,610,987,1597] (*~5900* *ns/op*, 2× faster)
+
+.play fib_6/fib_6.go /START/,/END/
