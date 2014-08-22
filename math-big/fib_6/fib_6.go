@@ -24,7 +24,7 @@ func fibn(from, to int) []*big.Int { // HL
 	for i := from; i != 0; i-- {
 		a, b = b, a.Add(a, b)
 	}
-	for i := (to - from); i != 0; i-- {
+	for i := to - from; i != 0; i-- {
 		result = append(result, big.NewInt(0).Set(a)) // HL
 		a, b = b, a.Add(a, b)
 	}

@@ -1,15 +1,26 @@
 package main
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
+
+type sink struct{}
+
+func (s *sink) Write(b []byte) (int, error) {
+	return len(b), nil
+}
 
 func BenchmarkFib37(b *testing.B) {
+	s := &sink{}
 	for i := 0; i < b.N; i++ {
-		fib(37)
+		fmt.Fprintf(s, "%d", fib(37))
 	}
 }
 
 func BenchmarkFib93(b *testing.B) {
+	s := &sink{}
 	for i := 0; i < b.N; i++ {
-		fib(93)
+		fmt.Fprintf(s, "%d", fib(93))
 	}
 }

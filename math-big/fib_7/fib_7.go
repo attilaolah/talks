@@ -1,8 +1,8 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
+	"io"
 	"math/big"
 	"net/http"
 	"strconv"
@@ -18,17 +18,22 @@ func fib(n int) *big.Int {
 }
 
 // START OMIT
-func fibn(from, to int) []*big.Int { // HLWTF
-	result := []*big.Int{} // HLWTF
+func fibn(w io.Writer, from, to int) { // HL
+	if from >= to { // HL
+		w.Write([]byte{'[', ']'}) // HL
+		return                    // HL
+	} // HL
+	w.Write([]byte{'['}) // HL
 	a, b := big.NewInt(0), big.NewInt(1)
 	for i := from; i != 0; i-- {
 		a, b = b, a.Add(a, b)
 	}
-	for i := to - from; i != 0; i-- {
-		result = append(result, a) // HLWTF
+	for i := to - from - 1; i != 0; i-- {
+		fmt.Fprintf(w, "%s,", a) // HL
 		a, b = b, a.Add(a, b)
 	}
-	return result
+	fmt.Fprintf(w, "%s", a) // HL
+	w.Write([]byte{']'})    // HL
 }
 
 // END OMIT
@@ -48,7 +53,7 @@ func main() {
 				http.NotFound(w, r)
 				return
 			}
-			json.NewEncoder(w).Encode(fibn(from, to))
+			fibn(w, from, to)
 			return
 		}
 		if len(parts) == 1 {
