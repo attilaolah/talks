@@ -176,4 +176,4 @@ http://attilaolah.eu
 .code tricks.go /STARTI/,/ENDI/
 
 .link https://github.com/ncw/gmp github.com/ncw/gmp
-.link https://github.com/ncw/gmp/issues/1#issuecomment-44771441 banchmarks
+.link https://github.com/ncw/gmp/issues/1#issuecomment-44771441 benchmarks
